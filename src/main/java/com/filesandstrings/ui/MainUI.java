@@ -5,6 +5,7 @@
  */
 package com.filesandstrings.ui;
 
+import com.filesandstrings.fileManager.DirectoryManager;
 import com.filesandstrings.fileManager.ReaderManager;
 import com.filesandstrings.fileManager.WriterManager;
 /**
@@ -12,12 +13,15 @@ import com.filesandstrings.fileManager.WriterManager;
  * @author MIDP9
  */
 public class MainUI extends javax.swing.JFrame {
+    
+    boolean setted = false;
 
     /**
      * Creates new form MainUI
      */
     public MainUI() {
         initComponents();
+        addItemsToCB();
     }
 
     /**
@@ -37,6 +41,7 @@ public class MainUI extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         jlWords = new javax.swing.JLabel();
         jlChars = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +69,13 @@ public class MainUI extends javax.swing.JFrame {
 
         jlChars.setText("Caracteres:");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,13 +101,18 @@ public class MainUI extends javax.swing.JFrame {
                         .addGap(73, 73, 73)
                         .addComponent(jlWords)
                         .addGap(78, 78, 78)
-                        .addComponent(jlChars)))
+                        .addComponent(jlChars))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -109,7 +126,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlWords)
                     .addComponent(jlChars))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -134,6 +151,20 @@ public class MainUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        if (setted){
+            tfFileName.setText(jComboBox1.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void addItemsToCB() {
+       jComboBox1.removeAllItems();
+       String[] fileItems = DirectoryManager.getDirectoriesAsArrayString();
+       for ( int i = 0 ; i < fileItems.length ; i++ ){
+           jComboBox1.addItem(fileItems[i]);
+       }
+       setted = true;
+    }
     private boolean validateFields() {
         return !tfFileName.getText().isEmpty() &&
                 !taText.getText().isEmpty();
@@ -187,6 +218,7 @@ public class MainUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRead;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel jlChars;
