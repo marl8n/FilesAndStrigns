@@ -32,6 +32,8 @@ public class ReaderManager {
             while( (line = br.readLine()) != null ){
                 text = text.concat(line);
             }
+            br.close();
+            r.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ReaderManager.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
