@@ -145,6 +145,7 @@ public class MainUI extends javax.swing.JFrame {
                     tfFileName.getText(),
                     taText.getText()
             );
+            jComboBox1.addItem(tfFileName.getText());
             tfFileName.setText("");
             taText.setText("");
             setDataInLabels(taText.getText());
